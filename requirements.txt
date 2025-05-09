@@ -1,4 +1,6 @@
-flask
-matplotlib
-seaborn
-gunicorn
+flask==3.1.0
+gunicorn==23.0.0
+matplotlib==3.10.3
+seaborn==0.13.2
+numpy==2.2.5
+pandas==2.2.3
