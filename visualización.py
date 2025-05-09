@@ -1,28 +1,18 @@
-from flask import Flask, Response
 import seaborn as sns
 import matplotlib.pyplot as plt
-import io
 
-# Crear la aplicación Flask
-app = Flask(__name__)
+# Cargar un conjunto de datos de ejemplo
+data = sns.load_dataset("penguins")
 
-@app.route("/grafica")
-def generar_grafica():
-    # Cargar el dataset
-    data = sns.load_dataset("penguins")
+# Configurar el estilo de la gráfica
+sns.set_theme()
 
-    # Crear la gráfica
-    sns.set_theme()
-    plt.figure(figsize=(8, 6))
-    sns.histplot(data=data, x="flipper_length_mm", hue="species", multiple="stack")
+# Crear la gráfica: Histograma de la longitud de la aleta según la especie
+plt.figure(figsize=(8, 6))
+sns.histplot(data=data, x="flipper_length_mm", hue="species", multiple="stack")
 
-    # Guardar la imagen en un objeto de memoria
-    img = io.BytesIO()
-    plt.savefig(img, format="png")
-    img.seek(0)
-
-    # Devolver la imagen como respuesta HTTP
-    return Response(img.getvalue(), mimetype="image/png")
-
-# Ejecutar la API en Google Colab
-app.run()
+# Mostrar la gráfica
+plt.title("Distribución de la longitud de aletas por especie")
+plt.xlabel("Longitud de aleta (mm)")
+plt.ylabel("Frecuencia")
+plt.show()
